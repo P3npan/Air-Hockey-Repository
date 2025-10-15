@@ -18,20 +18,12 @@ class AirHockey extends Game implements KeyListener {
         this.addKeyListener(this);
         this.requestFocus();
     }
+    
+    Board airHockey = new Board();
 
     public void paint(Graphics brush) {
-        brush.setColor(Color.white);
-        brush.fillRect(0, 0, width, height);
-        brush.setColor(Color.red);
-        brush.drawOval(-75, 125, 150, 150);
-        brush.drawOval(725, 125, 150, 150);
-        brush.drawOval(360, 160, 80, 80);
-        brush.fillOval(390, 190, 20, 20);
-        brush.fillRect(399, 0, 2, 400);
 
-        Board airHockey = new Board();
-        airHockey.drawAllBorders(brush);
-
+        airHockey.draw(brush);
 
         updatePucks();
 
