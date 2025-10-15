@@ -27,13 +27,11 @@ class AirHockey extends Game implements KeyListener {
 
 
     public void keyPressed(KeyEvent e) {
-        striker1.handleKeyPress(e);
-        striker2.handleKeyPress(e);
+
     }
 
     public void keyReleased(KeyEvent e) {
-        striker1.handleKeyRelease(e);
-        striker2.handleKeyRelease(e);
+ 
     }
 
     public void keyTyped(KeyEvent e) {}

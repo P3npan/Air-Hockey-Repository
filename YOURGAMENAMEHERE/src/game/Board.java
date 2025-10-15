@@ -3,7 +3,7 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Board {
+public class Board implements Drawable{
 	
 	private Border goalLeft;
 	private Border goalRight;
@@ -26,6 +26,7 @@ public class Board {
         this.bottomBorder = new Border(0, 392, 800, 8);
     }
 
+	@Override
     public void draw(Graphics brush) {
         brush.setColor(Color.white);
         brush.fillRect(0, 0, 800, 428);
