@@ -1,21 +1,23 @@
 package game;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.event.*;
 
-public class Board implements Drawable{
-	
-	private Border goalLeft;
-	private Border goalRight;
-	private Border leftTopBorder;
-	private Border leftBottomBorder;
-	private Border rightTopBorder;
-	private Border rightBottomBorder;
-	private Border topBorder;
-	private Border bottomBorder;
-	
-	    
-	public Board() {
+public class Board implements Drawable {
+
+    private Border goalLeft;
+    private Border goalRight;
+    private Border leftTopBorder;
+    private Border leftBottomBorder;
+    private Border rightTopBorder;
+    private Border rightBottomBorder;
+    private Border topBorder;
+    private Border bottomBorder;
+
+    private Striker leftStriker;
+    private Striker rightStriker;
+
+    public Board() {
         this.goalLeft = new Border(0, 125, 8, 150);
         this.goalRight = new Border(792, 125, 8, 150);
         this.leftTopBorder = new Border(0, 0, 8, 127);
@@ -24,9 +26,12 @@ public class Board implements Drawable{
         this.rightBottomBorder = new Border(792, 273, 8, 150);
         this.topBorder = new Border(0, 0, 800, 8);
         this.bottomBorder = new Border(0, 392, 800, 8);
+
+        this.leftStriker = new Striker(200, 200, Color.blue, true);
+        this.rightStriker = new Striker(600, 200, Color.green, false);
     }
 
-	@Override
+    @Override
     public void draw(Graphics brush) {
         brush.setColor(Color.white);
         brush.fillRect(0, 0, 800, 428);
@@ -45,37 +50,52 @@ public class Board implements Drawable{
         rightBottomBorder.drawRectangle(brush, Color.black);
         topBorder.drawRectangle(brush, Color.black);
         bottomBorder.drawRectangle(brush, Color.black);
+
+        leftStriker.update(800, 428);
+        rightStriker.update(800, 428);
+        leftStriker.draw(brush);
+        rightStriker.draw(brush);
     }
-	
-	public Border getGoalLeft() {
-	    return goalLeft;
-	}
 
-	public Border getGoalRight() {
-	    return goalRight;
-	}
+    public void handleKeyPress(KeyEvent e) {
+        leftStriker.handleKeyPress(e);
+        rightStriker.handleKeyPress(e);
+    }
 
-	public Border getLeftTopBorder() {
-	    return leftTopBorder;
-	}
+    public void handleKeyRelease(KeyEvent e) {
+        leftStriker.handleKeyRelease(e);
+        rightStriker.handleKeyRelease(e);
+    }
 
-	public Border getLeftBottomBorder() {
-	    return leftBottomBorder;
-	}
+    public Border getGoalLeft() {
+        return goalLeft;
+    }
 
-	public Border getRightTopBorder() {
-	    return rightTopBorder;
-	}
+    public Border getGoalRight() {
+        return goalRight;
+    }
 
-	public Border getRightBottomBorder() {
-	    return rightBottomBorder;
-	}
+    public Border getLeftTopBorder() {
+        return leftTopBorder;
+    }
 
-	public Border getTopBorder() {
-	    return topBorder;
-	}
+    public Border getLeftBottomBorder() {
+        return leftBottomBorder;
+    }
 
-	public Border getBottomBorder() {
-	    return bottomBorder;
-	}
+    public Border getRightTopBorder() {
+        return rightTopBorder;
+    }
+
+    public Border getRightBottomBorder() {
+        return rightBottomBorder;
+    }
+
+    public Border getTopBorder() {
+        return topBorder;
+    }
+
+    public Border getBottomBorder() {
+        return bottomBorder;
+    }
 }
