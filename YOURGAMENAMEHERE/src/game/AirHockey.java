@@ -22,7 +22,6 @@ class AirHockey extends Game implements KeyListener {
     Board airHockey = new Board();
 
     public void paint(Graphics brush) {
-
         airHockey.draw(brush);
 
         updatePucks();
