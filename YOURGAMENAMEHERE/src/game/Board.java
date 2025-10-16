@@ -3,7 +3,7 @@ package game;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Board implements Drawable {
+public class Board implements Drawable{
 
     private Border goalLeft;
     private Border goalRight;
@@ -29,6 +29,7 @@ public class Board implements Drawable {
 
         this.leftStriker = new Striker(200, 200, Color.blue, true);
         this.rightStriker = new Striker(600, 200, Color.green, false);
+        
     }
 
     @Override
@@ -57,15 +58,6 @@ public class Board implements Drawable {
         rightStriker.draw(brush);
     }
 
-    public void handleKeyPress(KeyEvent e) {
-        leftStriker.handleKeyPress(e);
-        rightStriker.handleKeyPress(e);
-    }
-
-    public void handleKeyRelease(KeyEvent e) {
-        leftStriker.handleKeyRelease(e);
-        rightStriker.handleKeyRelease(e);
-    }
 
     public Border getGoalLeft() {
         return goalLeft;
@@ -97,5 +89,13 @@ public class Board implements Drawable {
 
     public Border getBottomBorder() {
         return bottomBorder;
+    }
+    
+    public Striker getLeftStriker() {
+        return leftStriker;
+    }
+
+    public Striker getRightStriker() {
+        return rightStriker;
     }
 }

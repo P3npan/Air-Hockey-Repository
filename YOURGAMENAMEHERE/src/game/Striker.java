@@ -2,6 +2,7 @@ package game;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Map;
 
 public class Striker implements Drawable{
     private int x;
@@ -14,12 +15,46 @@ public class Striker implements Drawable{
     private boolean downPressed;
     private boolean leftPressed;
     private boolean rightPressed;
+    
+    private final Map<Integer, Runnable> keyPressActions;
+    private final Map<Integer, Runnable> keyReleaseActions;
+
 
     public Striker(int startX, int startY, Color color, boolean isLeftSide) {
         this.x = startX;
         this.y = startY;
         this.color = color;
         this.isLeftSide = isLeftSide;
+        
+        if (isLeftSide) {
+            keyPressActions = Map.of(
+                KeyEvent.VK_W, () -> upPressed = true,
+                KeyEvent.VK_S, () -> downPressed = true,
+                KeyEvent.VK_A, () -> leftPressed = true,
+                KeyEvent.VK_D, () -> rightPressed = true
+            );
+
+            keyReleaseActions = Map.of(
+                KeyEvent.VK_W, () -> upPressed = false,
+                KeyEvent.VK_S, () -> downPressed = false,
+                KeyEvent.VK_A, () -> leftPressed = false,
+                KeyEvent.VK_D, () -> rightPressed = false
+            );
+        } else {
+            keyPressActions = Map.of(
+                KeyEvent.VK_UP, () -> upPressed = true,
+                KeyEvent.VK_DOWN, () -> downPressed = true,
+                KeyEvent.VK_LEFT, () -> leftPressed = true,
+                KeyEvent.VK_RIGHT, () -> rightPressed = true
+            );
+
+            keyReleaseActions = Map.of(
+                KeyEvent.VK_UP, () -> upPressed = false,
+                KeyEvent.VK_DOWN, () -> downPressed = false,
+                KeyEvent.VK_LEFT, () -> leftPressed = false,
+                KeyEvent.VK_RIGHT, () -> rightPressed = false
+            );
+        }
     }
 
     public void update(int width, int height) {
@@ -38,7 +73,7 @@ public class Striker implements Drawable{
                 x += speed;
             }
         } else {
-            if (leftPressed && x > 400 + radius) {
+            if (leftPressed && x > 385 + radius) {
                 x -= speed;
             }
             if (rightPressed && x < width - radius * 2 - 8) {
@@ -52,41 +87,21 @@ public class Striker implements Drawable{
         brush.fillOval(x, y, radius * 2, radius * 2);
     }
 
-    public void handleKeyPress(KeyEvent e) {
-        int code = e.getKeyCode();
-        if (isLeftSide) {
-            switch (code) {
-                case KeyEvent.VK_W -> upPressed = true;
-                case KeyEvent.VK_S -> downPressed = true;
-                case KeyEvent.VK_A -> leftPressed = true;
-                case KeyEvent.VK_D -> rightPressed = true;
+    
+    public KeyListener getKeyListener() {
+        return new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+            	keyPressActions.getOrDefault(e.getKeyCode(), () -> {}).run();
             }
-        } else {
-            switch (code) {
-                case KeyEvent.VK_UP -> upPressed = true;
-                case KeyEvent.VK_DOWN -> downPressed = true;
-                case KeyEvent.VK_LEFT -> leftPressed = true;
-                case KeyEvent.VK_RIGHT -> rightPressed = true;
-            }
-        }
-    }
 
-    public void handleKeyRelease(KeyEvent e) {
-        int code = e.getKeyCode();
-        if (isLeftSide) {
-            switch (code) {
-                case KeyEvent.VK_W -> upPressed = false;
-                case KeyEvent.VK_S -> downPressed = false;
-                case KeyEvent.VK_A -> leftPressed = false;
-                case KeyEvent.VK_D -> rightPressed = false;
+            @Override
+            public void keyReleased(KeyEvent e) {
+            	keyReleaseActions.getOrDefault(e.getKeyCode(), () -> {}).run();
             }
-        } else {
-            switch (code) {
-                case KeyEvent.VK_UP -> upPressed = false;
-                case KeyEvent.VK_DOWN -> downPressed = false;
-                case KeyEvent.VK_LEFT -> leftPressed = false;
-                case KeyEvent.VK_RIGHT -> rightPressed = false;
-            }
-        }
+
+            @Override
+            public void keyTyped(KeyEvent e) {}
+        };
     }
 }
