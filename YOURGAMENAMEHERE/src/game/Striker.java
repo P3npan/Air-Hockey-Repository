@@ -77,7 +77,7 @@ public class Striker implements Drawable{
         if (upPressed && y > 8) {
             y -= speed;
         }
-        if (downPressed && y < height - radius * 2 - 8) {
+        if (downPressed && y < height - radius * 2 - 36) {
             y += speed;
         }
 
