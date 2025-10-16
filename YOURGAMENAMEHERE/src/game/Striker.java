@@ -5,12 +5,23 @@ import java.awt.event.*;
 import java.util.Map;
 
 public class Striker implements Drawable{
+	//Position variables
     private int x;
     private int y;
+    
+    //Sets speed of strikers
     private int speed = 5;
+    
+    //Sets size of strikers
     private int radius = 22;
+    
+    //Striker color
     private Color color;
+    
+    //Checks for left side striker
     private boolean isLeftSide;
+    
+    //Checks which movement condition is satisfied
     private boolean upPressed;
     private boolean downPressed;
     private boolean leftPressed;
@@ -19,13 +30,16 @@ public class Striker implements Drawable{
     private final Map<Integer, Runnable> keyPressActions;
     private final Map<Integer, Runnable> keyReleaseActions;
 
-
+    //Instantiates the positions and colors of the strikers
     public Striker(int startX, int startY, Color color, boolean isLeftSide) {
         this.x = startX;
         this.y = startY;
         this.color = color;
+        //Used to identify a left side striker as movement varies
         this.isLeftSide = isLeftSide;
         
+        
+        //Lambda functions in control of understanding keyboard input and updating movement permitting booleans accordingly
         if (isLeftSide) {
             keyPressActions = Map.of(
                 KeyEvent.VK_W, () -> upPressed = true,
@@ -57,7 +71,9 @@ public class Striker implements Drawable{
         }
     }
 
+    //Updates the position of the Strikers upon movement
     public void update(int width, int height) {
+    	//Series of if loops checking which keyboard input condition is true.
         if (upPressed && y > 8) {
             y -= speed;
         }
@@ -82,12 +98,13 @@ public class Striker implements Drawable{
         }
     }
 
+    //In charge of drawing the strikers on the board when called from Board.java
     public void draw(Graphics brush) {
         brush.setColor(color);
         brush.fillOval(x, y, radius * 2, radius * 2);
     }
 
-    
+    //Anonymous KeyListner class only relevant for the Strikers since they are the only objects moved via Keyboard inputs
     public KeyListener getKeyListener() {
         return new KeyListener() {
             @Override

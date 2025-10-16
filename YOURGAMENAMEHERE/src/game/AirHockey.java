@@ -11,10 +11,11 @@ public class AirHockey extends Game{
     public AirHockey() {
     	super("Air Hockey", 800, 428);
         this.setFocusable(true);
-
+        
+        //Creates Air Hockey Board Object
         airHockey = new Board();
 
-
+        //Gets the Key Listener from the Striker Objects to be used for Keyboard Inputs
         this.addKeyListener(airHockey.getLeftStriker().getKeyListener());
         this.addKeyListener(airHockey.getRightStriker().getKeyListener());
 
@@ -23,6 +24,8 @@ public class AirHockey extends Game{
 
     @Override
     public void paint(Graphics brush) {
+    	
+    	//Draws the Board object according to the draw method in the Board Class
         if (airHockey != null) {
             airHockey.draw(brush);
         }

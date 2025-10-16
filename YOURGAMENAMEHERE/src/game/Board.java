@@ -5,9 +5,11 @@ import java.awt.event.*;
 
 public class Board implements Drawable{
 	
+	//Instantiates left and right goals
 	private Goal goalLeft;
     private Goal goalRight;
 
+    //Instantiates each border as an individual object
     private Border leftTopBorder;
     private Border leftBottomBorder;
     private Border rightTopBorder;
@@ -15,6 +17,7 @@ public class Board implements Drawable{
     private Border topBorder;
     private Border bottomBorder;
     
+    //Instantiates the 2 strikers
     private Striker leftStriker;
     private Striker rightStriker;
 
@@ -36,6 +39,8 @@ public class Board implements Drawable{
 
     @Override
     public void draw(Graphics brush) {
+    	
+    	//Draws all non-interactive elements on the board
         brush.setColor(Color.white);
         brush.fillRect(0, 0, 800, 428);
         brush.setColor(Color.red);
@@ -45,9 +50,11 @@ public class Board implements Drawable{
         brush.fillOval(390, 190, 20, 20);
         brush.fillRect(399, 0, 2, 400);
 
+        //Draws the goals via the draw method in inner class Goal
         goalLeft.draw(brush);
         goalRight.draw(brush);
         
+        //Draws each border object via the drawRectangle method in Border class
         leftTopBorder.drawRectangle(brush, Color.black);
         leftBottomBorder.drawRectangle(brush, Color.black);
         rightTopBorder.drawRectangle(brush, Color.black);
@@ -55,12 +62,14 @@ public class Board implements Drawable{
         topBorder.drawRectangle(brush, Color.black);
         bottomBorder.drawRectangle(brush, Color.black);
 
+        //Updates starting positions of strikers and then draws them on the board via the Striker draw method
         leftStriker.update(800, 428);
         rightStriker.update(800, 428);
         leftStriker.draw(brush);
         rightStriker.draw(brush);
     }
     
+    //Goal inner class implemented since goal is a part of board but still a distinct interactive object
     public class Goal implements Drawable{
         private int x, y, width, height;
         private Color color;
@@ -80,7 +89,7 @@ public class Board implements Drawable{
         }
     }
 
-
+    //Getters for all instance variables
     public Goal getGoalLeft() {
         return goalLeft;
     }
