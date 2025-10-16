@@ -8,7 +8,7 @@ public class Striker implements Drawable{
     private int x;
     private int y;
     private int speed = 5;
-    private int radius = 15;
+    private int radius = 22;
     private Color color;
     private boolean isLeftSide;
     private boolean upPressed;
@@ -69,11 +69,11 @@ public class Striker implements Drawable{
             if (leftPressed && x > 8) {
                 x -= speed;
             }
-            if (rightPressed && x < 400 - radius * 2) {
+            if (rightPressed && x < 395 - radius * 2) {
                 x += speed;
             }
         } else {
-            if (leftPressed && x > 385 + radius) {
+            if (leftPressed && x > 380 + radius) {
                 x -= speed;
             }
             if (rightPressed && x < width - radius * 2 - 8) {
