@@ -4,22 +4,24 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Board implements Drawable{
+	
+	private Goal goalLeft;
+    private Goal goalRight;
 
-    private Border goalLeft;
-    private Border goalRight;
     private Border leftTopBorder;
     private Border leftBottomBorder;
     private Border rightTopBorder;
     private Border rightBottomBorder;
     private Border topBorder;
     private Border bottomBorder;
-
+    
     private Striker leftStriker;
     private Striker rightStriker;
 
     public Board() {
-        this.goalLeft = new Border(0, 125, 8, 150);
-        this.goalRight = new Border(792, 125, 8, 150);
+        this.goalLeft = new Goal(0, 125, 8, 150, Color.red);
+        this.goalRight = new Goal(792, 125, 8, 150, Color.red);
+        
         this.leftTopBorder = new Border(0, 0, 8, 127);
         this.leftBottomBorder = new Border(0, 273, 8, 150);
         this.rightTopBorder = new Border(792, 0, 8, 127);
@@ -43,8 +45,9 @@ public class Board implements Drawable{
         brush.fillOval(390, 190, 20, 20);
         brush.fillRect(399, 0, 2, 400);
 
-        goalLeft.drawRectangle(brush, Color.red);
-        goalRight.drawRectangle(brush, Color.red);
+        goalLeft.draw(brush);
+        goalRight.draw(brush);
+        
         leftTopBorder.drawRectangle(brush, Color.black);
         leftBottomBorder.drawRectangle(brush, Color.black);
         rightTopBorder.drawRectangle(brush, Color.black);
@@ -57,13 +60,32 @@ public class Board implements Drawable{
         leftStriker.draw(brush);
         rightStriker.draw(brush);
     }
+    
+    public class Goal implements Drawable{
+        private int x, y, width, height;
+        private Color color;
+
+        public Goal(int x, int y, int width, int height, Color color) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.color = color;
+        }
+        
+        @Override
+        public void draw(Graphics brush) {
+            brush.setColor(color);
+            brush.fillRect(x, y, width, height);
+        }
+    }
 
 
-    public Border getGoalLeft() {
+    public Goal getGoalLeft() {
         return goalLeft;
     }
 
-    public Border getGoalRight() {
+    public Goal getGoalRight() {
         return goalRight;
     }
 
